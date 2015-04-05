@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
-  get '/auth/facebook/callback', to: 'welcome#callback'
+  match '/auth/facebook/callback', to: 'welcome#callback', via: [:get]
+
+  match '/auth/failure', to: 'welcome#callback_failure', via: [:get]
 
   get 'welcome/home'
 
