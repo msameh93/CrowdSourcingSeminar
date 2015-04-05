@@ -16,7 +16,9 @@
 		  <% if !@req_online.blank? %>
 		  	<% for f in @req_online %>
 		  		<ul>
-		  			<li id="friend"><a><%= f.word %></a></li>
+		  			<li><a><%= f.word %></a></li>
+		  			<li><a href="/game/accept_request?r_id=<%= f.id %>&w=<%=f.word%>&h=<%=f.hint%>">Accept</a></li>
+		  			<li><a href="/game/delete_request?r_id=<%= f.id %>">Delete</a></li>
 		  		</ul>
 		  	<% end %>
 		  <% else %>

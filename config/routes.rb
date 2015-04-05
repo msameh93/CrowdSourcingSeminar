@@ -19,6 +19,12 @@ Rails.application.routes.draw do
 
   get '/game/requests'
 
+  get '/game/accept_request'
+
+  get '/game/delete_request'
+
+  get '/game/play_game'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

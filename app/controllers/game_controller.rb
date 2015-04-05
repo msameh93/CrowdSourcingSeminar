@@ -1,8 +1,9 @@
 class GameController < ApplicationController
 	require 'open-uri'
+	helper_method :delete_request
 
 	def send_request
-		r = Request.create_request(session[:current_user_id], session[:rid], params[:q], params[:h])
+		r = Request.create_request(session[:current_user_id], session[:rid], params[:c], params[:q], params[:h])
 		redirect_to controller: "welcome", action: "home"
 	end
 
@@ -41,5 +42,20 @@ class GameController < ApplicationController
     			end
     		end
     	}
+	end
+
+	def play_game
+	end
+
+	def accept_request
+		game = Game.start_new_game(params["r_id"], session[:current_user_id], params["w"], params["h"])
+		Request.find(params["r_id"]).destroy
+		redirect_to controller: "game", action: "play_game"
+	end
+
+	def delete_request
+		flash[:success] = "Request deleted successfully!"
+		Request.find(params["r_id"]).destroy
+		redirect_to controller: "game", action: "requests"
 	end
 end
