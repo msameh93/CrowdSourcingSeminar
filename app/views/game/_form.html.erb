@@ -1,0 +1,9 @@
+<%= form_tag("/game/send_request", method: "get") do %>
+			<%= label_tag(:c, "Select Word Category:") %>
+			<%= select_tag(:c, options_from_collection_for_select(Category.all, :id, :name)) %><br>
+  			<%= label_tag(:q, "Enter Word:") %>
+  			<%= text_field_tag(:q) %><br>
+  			<%= label_tag(:h, "Enter hint:") %>
+  			<%= text_field_tag(:h) %><br>
+  			<%= submit_tag("Send Request") %>
+			<% end %>

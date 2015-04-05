@@ -13,8 +13,9 @@ class ApplicationController < ActionController::Base
 	private
 	def set_last_seen_at
 		user = User.find_by(id: session[:current_user_id])
-  		user.update_attribute(:last_seen_at, Time.now)
-  		user.save
-  		session[:last_seen_at] = Time.now
+  	user.update_attribute(:last_seen_at, Time.now)
+    user.online = true
+  	user.save
+  	session[:last_seen_at] = Time.now
 	end
 end
