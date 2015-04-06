@@ -46,3 +46,6 @@ end
 gem 'coffee-script-source', '1.8.0'
 gem 'tzinfo-data'
 gem 'omniauth-facebook'
+gem 'faye'
+gem 'thin', require: false
+gem 'sync'

@@ -6,7 +6,7 @@
 	<div class="nav-bar">
 		<ul>
   			<li><a>Home</a></li>
-  			<li><a href="">Play!</a></li>
+  			<li><a href="/game/game">Play!</a></li>
   			<li><a href="">Challenge</a></li>
   			<li><a href="">Rank</a></li>
   			<li><a>Requests</a></li>
@@ -14,12 +14,11 @@
 		</ul>
 	</div>
 	<h4>Choose a request:</h4>
-		  <% if !@req_online.blank? %>
-		  	<% for f in @req_online %>
-		  		<ul>
-		  			<li id="friend"><a><%= f.word %></a></li>
-		  		</ul>
+		  <% if !@request.blank? %>
+		  	<% @request.each do |request| %>
+		  		<%= sync partial: 'request_list_row', resource: request %>
 		  	<% end %>
+		  	<%= sync_new partial: 'request_list_row', resource: Request.new %>
 		  <% else %>
 		  	<p>No requests</p>
 		  <% end %>
