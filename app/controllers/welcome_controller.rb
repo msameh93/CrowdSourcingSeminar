@@ -1,13 +1,17 @@
 class WelcomeController < ApplicationController
+  
+  # index default page where user connects to fb
   def index
   end
 
+  # user's home page which is currently empty
   def home
     @current_user = current_user
     current_user.online = true
     current_user.save
   end
 
+  # fb call back method handling authentication success routine and redirects to user's home
   def callback
   	auth = request.env["omniauth.auth"]
     if auth
@@ -30,6 +34,7 @@ class WelcomeController < ApplicationController
     
   end
 
+  # fb callback failure method redirects to index default page
   def callback_failure
     flash[:error] = "Failed to sign in to Facebook!"
   	redirect_to root_url

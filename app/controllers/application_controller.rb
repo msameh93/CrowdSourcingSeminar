@@ -6,11 +6,12 @@ class ApplicationController < ActionController::Base
   before_filter :set_last_seen_at, if: proc { session[:current_user_id] != nil }
   before_filter :game_on, if: proc { session[:current_user_id] != nil }
 
-  	def current_user
+  def current_user
     @_current_user ||= session[:current_user_id] &&
       User.find_by(id: session[:current_user_id])
-  	end
+  end
 
+  # method to make sure user is online
 	private
 	def set_last_seen_at
 		user = User.find_by(id: session[:current_user_id])
@@ -20,6 +21,7 @@ class ApplicationController < ActionController::Base
   	session[:last_seen_at] = Time.now
 	end
 
+  # method to redirect user to game page if a game started
   private
   def game_on
     game1 = Game.find_by(player1_id: session[:current_user_id])

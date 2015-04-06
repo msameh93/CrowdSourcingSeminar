@@ -1,11 +1,13 @@
 class GameController < ApplicationController
 	require 'open-uri'
 
+	# method used to send a new request to start a game and has no view (redirects to home page)
 	def send_request
 		r = Request.create_request(session[:current_user_id], session[:rid], params[:c], params[:q], params[:h])
 		redirect_to controller: "welcome", action: "home"
 	end
 
+	# method used for viewing user requests page
 	def requests
 		@current_user = current_user
 		requests = Request.where(:receiver_id => current_user.id)
@@ -23,6 +25,7 @@ class GameController < ApplicationController
 		}
 	end
 
+	# method used for viewing online users in order to start a game by sending a request
 	def game
 		@current_user = current_user
 		response = JSON.parse(open("https://graph.facebook.com/me/friends?access_token=#{session[:token]}").read)
@@ -43,6 +46,7 @@ class GameController < ApplicationController
     	}
 	end
 
+	# the method and view responsible for an ongoing game between two players
 	def play_game
 		@current_game = Game.find_by(player1_id: session[:current_user_id])
 		if !@current_game
@@ -50,6 +54,8 @@ class GameController < ApplicationController
 		end
 	end
 
+	# when user receives a request and accepts it, he is redirected tp play_game page after deleting the request
+	# and creating a new game
 	def accept_request
 		curr_g1 = Game.find_by(player1_id: params["r_id"])
 		curr_g2 = Game.find_by(player2_id: params["r_id"])
@@ -62,6 +68,7 @@ class GameController < ApplicationController
 		end
 	end
 
+	# when user receievs a request but decides to delete it and not play the game
 	def delete_request
 		flash[:success] = "Request deleted successfully!"
 		Request.find(params["r_id"]).destroy
