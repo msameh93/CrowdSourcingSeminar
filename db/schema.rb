@@ -11,11 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331180113) do
+ActiveRecord::Schema.define(version: 20150406120343) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "games", force: :cascade do |t|
-    t.string   "player1_id"
-    t.string   "player2_id"
+    t.integer  "player1_id"
+    t.integer  "player2_id"
     t.string   "curr_word"
     t.string   "hint"
     t.integer  "turn"
@@ -26,12 +32,13 @@ ActiveRecord::Schema.define(version: 20150331180113) do
   end
 
   create_table "requests", force: :cascade do |t|
-    t.string   "sender_id"
-    t.string   "receiver_id"
+    t.integer  "sender_id"
+    t.integer  "receiver_id"
     t.string   "word"
     t.string   "hint"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "category_id"
   end
 
   create_table "users", force: :cascade do |t|

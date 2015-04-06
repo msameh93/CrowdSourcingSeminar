@@ -1,0 +1,10 @@
+<% g = Game.find(@current_game.id) %>
+<% if g.turn == 1 %>
+	<% g.turn = 2 %>
+<% elsif g.turn == 2 %>
+	<% g.turn = 1 %>
+<% end %>
+<% g.save %>
+<% @current_game = g %>
+
+<%= render "main" %>

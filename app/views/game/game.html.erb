@@ -7,13 +7,7 @@
 
 	function gameRequest() {
 		clear();
-		$("#zone").append('<%= form_tag("/game/send_request", method: "get") do %>' +
-  		'<%= label_tag(:q, "Enter Word:") %>' +
-  		'<%= text_field_tag(:q) %><br>' +
-  		'<%= label_tag(:h, "Enter hint:") %>' +
-  		'<%= text_field_tag(:h) %><br>' +
-  		'<%= submit_tag("Send Request") %>' +
-		'<% end %>');
+		$("#zone").append('<%= escape_javascript(render "form") %>');
 	}
 
 </script>
@@ -27,7 +21,6 @@
 		<ul>
   			<li><a href="/welcome/home">Home</a></li>
   			<li><a>Play!</a></li>
-  			<li><a href="">Challenge</a></li>
   			<li><a href="">Rank</a></li>
   			<li><a href="/game/requests">Requests</a></li>
   			<li><a href="">Leave 3arosty</a></li>

@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
-  get '/auth/facebook/callback', to: 'welcome#callback'
+  match '/auth/facebook/callback', to: 'welcome#callback', via: [:get]
+
+  match '/auth/failure', to: 'welcome#callback_failure', via: [:get]
 
   get 'welcome/home'
 
@@ -16,6 +18,12 @@ Rails.application.routes.draw do
   get 'game/send_request'
 
   get '/game/requests'
+
+  get '/game/accept_request'
+
+  get '/game/delete_request'
+
+  get '/game/play_game'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

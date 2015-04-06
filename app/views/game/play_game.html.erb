@@ -1,0 +1,18 @@
+<body>
+	<div class="zone" id="zone">
+		<%= render "main" %>
+	</div>
+</body>
+
+<script type="text/javascript">
+	
+	function clear() {
+ 	   $("#zone").empty();
+  	}
+
+	function changeTurn() {
+		clear();
+		$("#zone").append('<%= escape_javascript(render "changeTurn") %>');
+	}
+
+</script>

@@ -5,9 +5,9 @@
 	<h2>Score: <%= @current_user.score %></h2>
 	<div class="nav-bar">
 		<ul>
-  			<li><a>Home</a></li>
+
+  			<li><a href="/welcome/home">Home</a></li>
   			<li><a href="/game/game">Play!</a></li>
-  			<li><a href="">Challenge</a></li>
   			<li><a href="">Rank</a></li>
   			<li><a>Requests</a></li>
   			<li><a href="">Leave 3arosty</a></li>
@@ -18,9 +18,7 @@
 		  	<% @request.each do |request| %>
 		  		<%= sync partial: 'request_list_row', resource: request %>
 		  	<% end %>
-		  	<%= sync_new partial: 'request_list_row', resource: Request.new %>
-		  <% else %>
-		  	<p>No requests</p>
 		  <% end %>
+		  <%= sync_new partial: 'request_list_row', resource: Request.new %>
 	</div>
 </body>
