@@ -1,6 +1,5 @@
 class GameController < ApplicationController
 	require 'open-uri'
-	helper_method :delete_request
 
 	def send_request
 		r = Request.create_request(session[:current_user_id], session[:rid], params[:c], params[:q], params[:h])
@@ -45,12 +44,22 @@ class GameController < ApplicationController
 	end
 
 	def play_game
+		@current_game = Game.find_by(player1_id: session[:current_user_id])
+		if !@current_game
+			@current_game = Game.find_by(player2_id: session[:current_user_id])
+		end
 	end
 
 	def accept_request
-		game = Game.start_new_game(params["r_id"], session[:current_user_id], params["w"], params["h"])
-		Request.find(params["r_id"]).destroy
-		redirect_to controller: "game", action: "play_game"
+		curr_g1 = Game.find_by(player1_id: params["r_id"])
+		curr_g2 = Game.find_by(player2_id: params["r_id"])
+		if curr_g1 || curr_g2
+			flash[:error] = "Opponent is playing another game!"
+		else
+			game = Game.start_new_game(params["r_id"], session[:current_user_id], params["w"], params["h"])
+			Request.find(params["r_id"]).destroy
+			redirect_to controller: "game", action: "play_game"
+		end
 	end
 
 	def delete_request

@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :set_last_seen_at, if: proc { session[:current_user_id] != nil }
+  before_filter :game_on, if: proc { session[:current_user_id] != nil }
 
   	def current_user
     @_current_user ||= session[:current_user_id] &&
@@ -18,4 +19,15 @@ class ApplicationController < ActionController::Base
   	user.save
   	session[:last_seen_at] = Time.now
 	end
+
+  private
+  def game_on
+    game1 = Game.find_by(player1_id: session[:current_user_id])
+    game2 = Game.find_by(player2_id: session[:current_user_id])
+    if game1 || game2
+      if !(request.original_url.include?("/game/play_game"))
+        redirect_to controller: "game", action: "play_game"
+      end
+    end
+  end
 end
