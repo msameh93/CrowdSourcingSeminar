@@ -1,5 +1,0 @@
-<ul>
-	<li id="friend"><q><%= User.find(request.sender_id).name %> has requested to play a game with you.</q></li>
-	<li><a href="/game/accept_request?r_id=<%= request.id %>&w=<%=request.word%>&h=<%=request.hint%>">Accept</a></li>
-	<li><a href="/game/delete_request?r_id=<%= request.id %>">Delete</a></li>
-</ul>
