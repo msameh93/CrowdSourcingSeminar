@@ -5,6 +5,7 @@ class CreateRequests < ActiveRecord::Migration
       t.string :receiver_id
       t.string :word
       t.string :hint
+      t.integer :category_id
 
       t.timestamps null: false
     end
