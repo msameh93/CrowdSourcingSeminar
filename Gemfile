@@ -45,4 +45,5 @@ end
 
 gem 'coffee-script-source', '1.8.0'
 gem 'tzinfo-data'
+gem 'devise'
 gem 'omniauth-facebook'

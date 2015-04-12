@@ -1,29 +1,14 @@
 Rails.application.routes.draw do
-  get 'welcome/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'welcome#index'
+  root to: "games#index"
 
-  match '/auth/facebook/callback', to: 'welcome#callback', via: [:get]
-
-  match '/auth/failure', to: 'welcome#callback_failure', via: [:get]
-
-  get 'welcome/home'
-
-  get 'game/game'
-
-  get 'game/send_request'
-
-  get '/game/requests'
-
-  get '/game/accept_request'
-
-  get '/game/delete_request'
-
-  get '/game/play_game'
+  devise_for :users, controllers: {
+    sessions: "users/sessions",
+    omniauth_callbacks: "users/omniauth_callbacks"}
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
