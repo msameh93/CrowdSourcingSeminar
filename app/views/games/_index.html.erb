@@ -1,6 +1,25 @@
-<body>
-  <div class="zone" id="zone">
-    <h1>Welcome to 3arosty!</h1>
-    <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
+<div class="container" id= "caption_how">
+	<p id="caption">
+		You are not an Egyptian unless you know how to play 3arosty.
+	</p>
+	<button class= "btn btn-default" id="how_text">How To Play</button>
+	<%= link_to user_omniauth_authorize_path(:facebook), :class=>'btn btn-primary btn-lg', :id=>'fblogin-link' do %>
+    <i class="fa fa-facebook-square fa-lg"></i>
+        <h4 id= "loginfacebook"> Login with Facebook </h4>
+<% end %>
+<div class="panel panel-default" id="how-panel">
+  <div class="panel-body">
+    	<ul>
+    		<li> The Basic idea of the game is to try and guess the object that your opponent is thinking.</li>
+    		<li> You are allowed 3 guesses to try and get it right or else you lose.</li>
+    		<li> You can ask for hints from your opponent until he declares that has no more hintsto give.</li>
+    		<li> Try to think of powerful, yet vague hints to make it harder your opponent.</li>
+    		<li> For Example: I am currently thinking of a sofa, a possible hint could be "You can sit on it".</li>
+    	</ul>
+    	<p id="caption">
+			ENJOY.
+		</p>
   </div>
-</body>
+</div>
+</div>
+	

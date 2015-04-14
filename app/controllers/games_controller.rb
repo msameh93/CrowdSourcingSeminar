@@ -56,10 +56,10 @@ class GamesController < ApplicationController
 		game1 = Game.where(game_ended: false).find_by_player1_id(request.sender_id)
 		game2 = Game.where(game_ended: false).find_by_player2_id(request.receiver_id)
 		if game1 
-			flash[:error] = "Other Player is currently busy playing another game. Please try again later."
+			flash[:danger] = "Other Player is currently busy playing another game. Please try again later."
 			redirect_to controller: "games", action: "view_requests"
 		elsif game2
-			flash[:error] = "You cannot play more than one game at the same time."
+			flash[:danger] = "You cannot play more than one game at the same time."
 			redirect_to controller: "games", action: "view_requests"
 		end
 		new_game = Game.create_new_game(request.sender_id, request.receiver_id, request.word, 
@@ -69,7 +69,7 @@ class GamesController < ApplicationController
 			request.delete
 			redirect_to controller: "games", action: "game_on", gid: new_game.id
 		else
-			flash[:error] = "Something wrong happened. Could not start game."
+			flash[:danger] = "Something wrong happened. Could not start game."
 			redirect_to controller: "games", action: "view_requests"
 		end
 	end
@@ -78,9 +78,9 @@ class GamesController < ApplicationController
 		@game = Game.find(params[:gid])
 		if @game.game_ended?
 			if @game.winner.nil?
-				flash[:error] = "Seems that other player ended the game."
+				flash[:danger] = "Seems that other player ended the game."
 			else
-				flash[:error] = "You lose."
+				flash[:danger] = "You lose."
 			end
 			redirect_to controller: "games", action: "home"
 		end
@@ -167,7 +167,7 @@ class GamesController < ApplicationController
 				game.p2score = 0
 				game.winner = 1
 				game.save
-				flash[:error] = "You lose."
+				flash[:danger] = "You lose."
 				p1 = User.find(game.player1_id)
 				p1.score = p1.score + game.p1score
 				p1.save

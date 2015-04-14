@@ -17,8 +17,8 @@
       </ul>
     </div>
     
-		<div class="nav-bar">
-			<ul>
+		<div>
+			<ul class= "nav nav-tabs">
   			<li>Home</li>
   			<li><%= link_to("Play!", "/games/get_online_friends") %></li>
   			<li><%= link_to("Rank", "") %></li>
@@ -26,6 +26,5 @@
   			<li><%= link_to("Leave 3arosty", destroy_user_session_path, :method => :delete) %></li>
 			</ul>
 		</div>	
-
   </div>
 </body>
