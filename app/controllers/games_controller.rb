@@ -4,7 +4,7 @@ class GamesController < ApplicationController
 
 	def index
 		if user_signed_in?
-			redirect_to controller: "games", action: "home"
+			return redirect_to controller: "games", action: "home"
 		end
 	end
 
