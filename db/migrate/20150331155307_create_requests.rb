@@ -1,8 +1,8 @@
 class CreateRequests < ActiveRecord::Migration
   def change
     create_table :requests do |t|
-      t.string :sender_id
-      t.string :receiver_id
+      t.integer :sender_id
+      t.integer :receiver_id
       t.string :word
       t.string :hint
       t.integer :category_id

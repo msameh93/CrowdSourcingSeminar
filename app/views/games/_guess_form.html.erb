@@ -1,0 +1,6 @@
+<%= form_tag("/games/guess_word", method: "get") do %>
+<%= label_tag(:guess, "Enter Guess:") %>
+<%= text_field_tag(:guess) %><br>
+<%= hidden_field_tag(:gid, @game.id) %><br>
+<%= submit_tag("Send Guess") %>
+<% end %>

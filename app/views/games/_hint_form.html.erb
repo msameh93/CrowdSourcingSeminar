@@ -1,0 +1,6 @@
+<%= form_tag("/games/send_hint", method: "get") do %>
+<%= label_tag(:hint, "Enter hint:") %>
+<%= text_field_tag(:hint) %><br>
+<%= hidden_field_tag(:gid, @game.id) %><br>
+<%= submit_tag("Send Hint") %>
+<% end %>

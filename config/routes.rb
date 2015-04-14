@@ -10,6 +10,20 @@ Rails.application.routes.draw do
     sessions: "users/sessions",
     omniauth_callbacks: "users/omniauth_callbacks"}
 
+  get "/games/home"
+  get "/games/get_online_friends"
+  get "/games/send_request"
+  get "/games/view_requests"
+  get "/games/delete_request"
+  get "/games/start_game"
+  get "/games/game_on"
+  get "/games/leave_game"
+  get "/games/get_hint"
+  get "/games/no_more_hints"
+  get "/games/send_hint"
+  get "/games/guess_word"
+
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

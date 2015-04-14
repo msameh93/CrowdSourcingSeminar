@@ -1,0 +1,31 @@
+<body>
+  <div class="zone" id="zone">
+
+  	<h1>Hello, <%= session[:name] %></h1>
+		<img src="<%= session[:img] %>">
+		<h2>Score: <%= current_user.score %></h2>
+
+    <div>
+      <ul>
+        <% @game1 = Game.where(game_ended: false).find_by_player1_id(current_user.id) %>
+        <% @game2 = Game.where(game_ended: false).find_by_player2_id(current_user.id) %>
+        <% if @game1 %>
+          <li><%= link_to("Current Game", {controller: "games", action: "game_on", gid: @game1.id}) %></li>
+        <% elsif @game2 %>
+          <li><%= link_to("Current Game", {controller: "games", action: "game_on", gid: @game2.id}) %></li>
+        <% end %>
+      </ul>
+    </div>
+    
+		<div class="nav-bar">
+			<ul>
+  			<li>Home</li>
+  			<li><%= link_to("Play!", "/games/get_online_friends") %></li>
+  			<li><%= link_to("Rank", "") %></li>
+  			<li><%= link_to("Requests", "/games/view_requests") %></li>
+  			<li><%= link_to("Leave 3arosty", destroy_user_session_path, :method => :delete) %></li>
+			</ul>
+		</div>	
+
+  </div>
+</body>

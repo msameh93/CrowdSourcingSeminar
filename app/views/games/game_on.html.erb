@@ -1,0 +1,86 @@
+<script src="jquery-1.11.2.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+  
+  function clear() {
+     $("#zone").empty();
+  }
+
+  function sendHint() {
+    clear();
+    $("#zone").append('<%= escape_javascript(render "hint_form") %>');
+  }
+
+  function guessWord() {
+    clear();
+    $("#zone").append('<%= escape_javascript(render "guess_form") %>');
+  }
+
+</script>
+
+<body>
+  <div class="zone" id="zone">
+
+    <div class="nav-bar">
+      <ul>
+        <li><%= link_to("Back to home page", "/games/home") %></li>
+        <li><%= link_to("Leave Game", {controller: "games", action: "leave_game", gid: params[:gid]}) %></li>
+      </ul>
+    </div>
+
+    <div>
+      <% if @game.player1_id == current_user.id %>
+        
+        <h2>You ask</h2>
+        <h3>Word is: <%= @word.word %></h3>
+        <h3>Hints given:</h3>
+        <ul>
+          <% for hint in @hints %>
+            <li><%= hint.hint %></li><br>
+          <% end %>
+        </ul>
+        <p>Guess no: <%= @game.guess_no %></p>
+        <% if @guess != @game.guess %>
+          <p>Guess: <%= @game.guess %><% session[:guess] = @game.guess %></p>
+        <% end %>
+        <% if @game.turn == 1 %>
+          <ul>
+            <% if !@game.hints_finished? %>
+              <li><%= link_to("Send Hint", "#", onClick: "sendHint()") %></li>
+              <li><%= link_to("No more hints!", {controller: "games", action: "no_more_hints", gid: @game.id}) %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>not your turn!</p>
+        <% end %>
+      
+      <% elsif @game.player2_id == current_user.id %>
+        
+        <h2>You answer</h2>
+        <h3>Hints given:</h3>
+        <ul>
+          <% for hint in @hints %>
+            <li><%= hint.hint %></li><br>
+          <% end %>
+        </ul>
+        <p>Guess no: <%= @game.guess_no %></p>
+        <% if @guess != @game.guess %>
+          <p>Guess: <%= @game.guess %><% session[:guess] = @game.guess %></p>
+        <% end %>
+        <% if @game.turn == 2 %>
+          <ul>
+            <li><%= link_to("Guess word", "#", onClick: "guessWord()") %></li>
+            <% if @game.hints_finished? %>
+            <li>3arosty!</li>
+            <% else %>
+              <li><%= link_to("3arosty!", {controller: "games", action: "get_hint", gid: @game.id}) %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>not your turn!</p>
+        <% end %>
+      
+      <% end %>
+    </div>
+
+  </div>
+</body>
