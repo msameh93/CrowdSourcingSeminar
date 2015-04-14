@@ -8,7 +8,9 @@ class Game < ActiveRecord::Base
 			turn: 2,
 			guess_no: 0,
 			hints_finished: false,
-			game_ended: false)
+			game_ended: false,
+			p1score: 15,
+			p2score: 15)
 		game.save
 		if game
 			word = Word.create_new_word(game.id, word, hint, cid)

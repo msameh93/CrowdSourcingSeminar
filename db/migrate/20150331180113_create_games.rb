@@ -5,6 +5,9 @@ class CreateGames < ActiveRecord::Migration
       t.integer :player2_id
       t.integer :turn
       t.integer :guess_no
+      t.integer :p1score
+      t.integer :p2score
+      t.integer :winner
       t.boolean :hints_finished
       t.boolean :game_ended
       t.string :guess

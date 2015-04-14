@@ -31,6 +31,7 @@
       <% if @game.player1_id == current_user.id %>
         
         <h2>You ask</h2>
+        <h2>Score: <%= @game.p1score %></h2>
         <h3>Word is: <%= @word.word %></h3>
         <h3>Hints given:</h3>
         <ul>
@@ -56,6 +57,7 @@
       <% elsif @game.player2_id == current_user.id %>
         
         <h2>You answer</h2>
+        <h2>Score: <%= @game.p2score %></h2>
         <h3>Hints given:</h3>
         <ul>
           <% for hint in @hints %>

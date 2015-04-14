@@ -77,7 +77,11 @@ class GamesController < ApplicationController
 	def game_on
 		@game = Game.find(params[:gid])
 		if @game.game_ended?
-			flash[:error] = "Seems that other player ended the game."
+			if @game.winner.nil?
+				flash[:error] = "Seems that other player ended the game."
+			else
+				flash[:error] = "You lose."
+			end
 			redirect_to controller: "games", action: "home"
 		end
 		if @game.hints_finished?
@@ -103,6 +107,7 @@ class GamesController < ApplicationController
 		elsif game.turn == 2
 			game.turn = 1
 		end
+		game.p2score = game.p2score - 1
 		game.save
 		redirect_to controller: "games", action: "game_on", gid: game.id
 	end
@@ -144,14 +149,36 @@ class GamesController < ApplicationController
 		game.save
 		if word.word == params[:guess]
 			game.game_ended = true
+			game.p1score = 0
+			game.winner = 2
 			game.save
 			flash[:success] = "You win."
+			p1 = User.find(game.player1_id)
+			p1.score = p1.score + game.p1score
+			p1.save
+			p2 = User.find(game.player2_id)
+			p2.score = p2.score + game.p2score
+			p2.save
 			return redirect_to controller: "games", action: "home"
-		elsif game.guess_no == 3
-			game.game_ended = true
-			game.save
-			flash[:error] = "You lose."
-			return redirect_to controller: "games", action: "home"
+		else
+			if game.guess_no == 3
+				game.game_ended = true
+				game.p1score = 15
+				game.p2score = 0
+				game.winner = 1
+				game.save
+				flash[:error] = "You lose."
+				p1 = User.find(game.player1_id)
+				p1.score = p1.score + game.p1score
+				p1.save
+				p2 = User.find(game.player2_id)
+				p2.score = p2.score + game.p2score
+				p2.save
+				return redirect_to controller: "games", action: "home"
+			else
+				game.p2score = game.p2score - 5
+				game.save
+			end
 		end
 		redirect_to controller: "games", action: "game_on", gid: game.id
 	end
