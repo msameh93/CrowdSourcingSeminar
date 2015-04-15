@@ -19,14 +19,16 @@ class ApplicationController < ActionController::Base
   end
 
   def requests
-    requests = Request.where(receiver_id: current_user.id)
-    @req_online = Array.new
-    requests.each { |r|
-      user  = User.find(r.sender_id)
-      if user.online?
-        @req_online.push(r)
-      end
-    }
+    if current_user != nil
+      requests = Request.where(receiver_id: current_user.id)
+      @req_online = Array.new
+      requests.each { |r|
+        user  = User.find(r.sender_id)
+        if user.online?
+          @req_online.push(r)
+        end
+      }
+    end
   end
 
 end
