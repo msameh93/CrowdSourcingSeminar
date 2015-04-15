@@ -10,7 +10,6 @@ Rails.application.routes.draw do
     sessions: "users/sessions",
     omniauth_callbacks: "users/omniauth_callbacks"}
 
-  get "/games/home"
   get "/games/get_online_friends"
   get "/games/send_request"
   get "/games/view_requests"
@@ -22,6 +21,8 @@ Rails.application.routes.draw do
   get "/games/no_more_hints"
   get "/games/send_hint"
   get "/games/guess_word"
+  get "/update_request.js", to: "games#update_request"
+  get "/update_game.js", to: "games#update_game"
 
 
   # Example of regular route:

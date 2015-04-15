@@ -3,24 +3,57 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
-@font-face {
-	font-family: 'Archer Semibold';
-	font-style: normal;
-	font-weight: normal;
-	src: local('Archer Semibold'), url('Archer-Semibold-Pro.woff') format('woff');
-}
-
 body { 
 	background-image: url("retina_wood.png");
+}
+
+h3 {
+	text-align: center;
+	font-family: Archer Semibold;
+	opacity: 1;
+}
+
+#game-rule{
+	margin-top: 1cm;
+}
+
+#example{
+	margin-top: 2cm;
 }
 
 #how-panel { 
 	background-image: url("concrete_seamless.png");
 	margin-top:1cm;
+	opacity: 0.7;
+}
+
+#online_image{
+    border-radius: 15px;
+    height: 220px;
+    width: 200px;
+}
+
+#picture-row{
+	margin-top:2cm;	
+}
+
+#enjoy{
+	text-align: center;
+	color: red;
+	font-family: Archer Semibold;
+  	font-weight: 500 !important;
+  	margin-top:2cm;
+  	font-size: 50px;
 }
 
 .alert{
 	margin-top: 0.3cm;
+}
+
+#online-friends{
+	background-image: url("concrete_seamless.png");
+	margin-top:1cm;
+	opacity: 0.9;
 }
 
 .jumbotron #title{
@@ -33,6 +66,32 @@ body {
 
 h4{
 	display: inline-block;
+}
+
+#online{
+	text-align: center;
+	font-family: Archer Semibold;
+  	font-weight: 500 !important;
+}
+
+#request-link{
+	display: inline-block;
+	margin-right: 0;
+	padding-right: 0;
+}
+
+#request-no{
+	margin-right: 15px;
+	background: red;
+}
+
+#user_name{
+	font-weight: bold;
+	color: black;
+}
+
+#user_name:hover{
+	text-decoration:none;
 }
 
 .jumbotron #caption{
@@ -49,7 +108,7 @@ h4{
 }
 
 .jumbotron #caption_how{
-	background-image: linear-gradient(-45deg, black 25%, transparent 25%, transparent 50%, black 50%, black 75%, transparent 75%, transparent);
+	background-image: linear-gradient(-45deg, black 25%, transparent 25%, transparent 50%, black 75%, transparent 75%);
     background-size: 4px 4px;
 }
 
@@ -57,11 +116,6 @@ h4{
 	background: url(pool_table.png);
 	background-attachment: fixed;
 	margin-top: 1cm;
-}
-
-#how{
-	opacity:0.8;
-	background-image: url(concrete_seamless.png)
 }
 
 #how_text{
@@ -77,12 +131,18 @@ h4{
     color: white;
 }
 
+#game-hints{
+	
+}
+
+#hints{
+	text-align:center;
+}
+
 #how_text:hover{
     background: white;
     color: green;
 }
-
-
 
 .jumbotron #fblogin-link {
 	display: block;

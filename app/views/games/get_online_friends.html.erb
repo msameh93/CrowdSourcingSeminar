@@ -12,49 +12,40 @@
 
 </script>
 
-<body>
-  <div class="zone" id="zone">
-
-  	<h1>Hello, <%= session[:name] %></h1>
-		<img src="<%= session[:img] %>">
-		<h2>Score: <%= current_user.score %></h2>
-
-    <div>
-      <ul>
-        <% @game1 = Game.where(game_ended: false).find_by_player1_id(current_user.id) %>
-        <% @game2 = Game.where(game_ended: false).find_by_player2_id(current_user.id) %>
-        <% if @game1 %>
-          <li><%= link_to("Current Game", {controller: "games", action: "game_on", gid: @game1.id}) %></li>
-        <% elsif @game2 %>
-          <li><%= link_to("Current Game", {controller: "games", action: "game_on", gid: @game2.id}) %></li>
-        <% end %>
-      </ul>
-    </div>
-
-		<div class="nav-bar">
-			<ul>
-        <li><%= link_to("Home", "/games/home") %></li>
-        <li>Play!</li>
-        <li><%= link_to("Rank", "") %></li>
-        <li><%= link_to("Requests", "/games/view_requests") %></li>
-        <li><%= link_to("Leave 3arosty", destroy_user_session_path, :method => :delete) %></li>
-			</ul>
-		</div>
-
-    <h4>Choose a friend to play with:</h4>
-    <% if !@friends.blank? %>
-      <% if !@online.blank? %>
-        <% for f in @online %>
-          <ul>
-            <li id="link"><a onclick="gameRequest();<%= session[:receiver_id] = f['id'] %>"><%= f["name"] %></a></li>
-          </ul>
+<div class="zone" id="zone">
+  <div>
+    <ul>
+      <% @game1 = Game.where(game_ended: false).find_by_player1_id(current_user.id) %>
+      <% @game2 = Game.where(game_ended: false).find_by_player2_id(current_user.id) %>
+      <% if @game1 %>
+        <li><%= link_to("Current Game", {controller: "games", action: "game_on", gid: @game1.id}) %></li>
+      <% elsif @game2 %>
+        <li><%= link_to("Current Game", {controller: "games", action: "game_on", gid: @game2.id}) %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="panel panel-default" id= "online-friends">
+    <div class="panel-body">
+      <h2 id="online">Online Friends</h2>
+      <% if !@friends.blank? %>
+        <% if !@online.blank? %>
+          <div class="row" id="picture-row">
+            <% for f in @online %>
+              <div class="col-xs-6 col-md-3">
+                <a onclick="gameRequest();<%= session[:receiver_id] = f['id'] %>" class="thumbnail">
+                  <img class="media-object" id= "online_image" src="<%= (User.find_by_uid(f['id'])).image %>">
+                  <h3> <%= f["name"] %></h3>
+                </a>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <h2 id="online">You currently have no online friends.</h2>
         <% end %>
       <% else %>
-        <p>No online friends</p>
+        <h2 id="online">None of your friends play this game, invite them to play?</h2>
       <% end %>
-    <% else %>
-      <p>None of your friends play this game, invite them to play?</p>
-    <% end %>
-
+    </div>
   </div>
-</body>
+</div> 
+          

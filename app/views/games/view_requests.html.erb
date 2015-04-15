@@ -1,44 +1,31 @@
-<body>
-  <div class="zone" id="zone">
+<div>
+  <ul>
+    <% @game1 = Game.where(game_ended: false).find_by_player1_id(current_user.id) %>
+    <% @game2 = Game.where(game_ended: false).find_by_player2_id(current_user.id) %>
+    <% if @game1 %>
+      <li><%= link_to("Current Game", {controller: "games", action: "game_on", gid: @game1.id}) %></li>
+    <% elsif @game2 %>
+      <li><%= link_to("Current Game", {controller: "games", action: "game_on", gid: @game2.id}) %></li>
+    <% end %>
+  </ul>
+</div>
 
-  	<h1>Hello, <%= session[:name] %></h1>
-		<img src="<%= session[:img] %>">
-		<h2>Score: <%= current_user.score %></h2>
-    
-    <div>
-      <ul>
-        <% @game1 = Game.where(game_ended: false).find_by_player1_id(current_user.id) %>
-        <% @game2 = Game.where(game_ended: false).find_by_player2_id(current_user.id) %>
-        <% if @game1 %>
-          <li><%= link_to("Current Game", {controller: "games", action: "game_on", gid: @game1.id}) %></li>
-        <% elsif @game2 %>
-          <li><%= link_to("Current Game", {controller: "games", action: "game_on", gid: @game2.id}) %></li>
-        <% end %>
-      </ul>
-    </div>
-
-		<div class="nav-bar">
-			<ul>
-  			<li><%= link_to("Home", "/games/home") %></li>
-  			<li><%= link_to("Play!", "/games/get_online_friends") %></li>
-  			<li><%= link_to("Rank", "") %></li>
-  			<li>Requests</li>
-        <li><%= link_to("Leave 3arosty", destroy_user_session_path, :method => :delete) %></li>
-			</ul>
-		</div>
-
-    <h4>Choose a request:</h4>
-      <% if !@req_online.blank? %>
-        <% for f in @req_online %>
-          <ul>
-            <li>Game Hint: <%= f.hint %></li>
-            <li><%= link_to("Start Game", {controller: "games", action: "start_game", request_id: f.id}) %></li>
-            <li><%= link_to("Delete Request", {controller: "games", action: "delete_request", request_id: f.id}) %></li>
-          </ul>
-        <% end %>
-      <% else %>
-        <p>No requests</p>
-      <% end %>
-
+<div class="panel panel-default" id= "online-friends">
+  <div class="panel-body">
+    <h2 id="online">Choose a request:</h2>
+    <% if !@req_online.blank? %>
+        <div class="row" id="picture-row">
+          <% for f in @req_online %>
+            <div class="col-xs-6 col-md-3">
+              <%= link_to("Start Game", {controller: "games", action: "start_game", request_id: f.id}, :class=>'thumbnail') %>
+              <%= link_to("x", {controller: "games", action: "delete_request", request_id: f.id})%>
+                <img class="media-object" id= "online_image" src="<%= (User.find_by_id(f['sender_id'])).image %>">
+                <h3> Game Hint: <%= f.hint %></h3>
+            </div>
+          <% end %>
+        </div>
+    <% else %>
+      <h2 id="online">You have no pending requests.</h2>
+    <% end %>
   </div>
-</body>
+</div>

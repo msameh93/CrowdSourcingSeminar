@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 	has_many :games
 
   def online?
-    updated_at > 10.minutes.ago
+    updated_at > 5.minutes.ago
   end
 
 	def self.from_omniauth(auth)

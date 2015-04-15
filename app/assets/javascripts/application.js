@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require turbolinks
+//= require poller
 //= require_tree .
  
 $(document).ready(function () {
@@ -25,10 +26,15 @@ $(document).ready(function () {
 	}, 3000);
 	$(function() {
     	$("#how_text").on("click", function() {
-    		$("#how-panel").toggle();
+    	if ($("#how-panel").is(":visible") ) {
+    		$("#how-panel").toggle();    
+    	}else{
+    		$("#how-panel").toggle();    
     		var y = $(window).scrollTop(); 
-    		$("html, body").animate({ scrollTop: y + $(window).height() }, 600);
-			return false;
+    		$("html, body").animate({ scrollTop: y + $(window).height() }, "slow");      
+
+    	} 
+    	return false;
     });
 }); 
 });
