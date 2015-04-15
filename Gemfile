@@ -50,3 +50,4 @@ gem 'omniauth-facebook'
 gem 'bootstrap-sass'
 gem 'font-awesome-sass'
 gem 'paperclip'
+gem 'rails_12factor', group: :production
