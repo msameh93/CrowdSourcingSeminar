@@ -32,7 +32,6 @@ $(document).ready(function () {
     		$("#how-panel").toggle();    
     		var y = $(window).scrollTop(); 
     		$("html, body").animate({ scrollTop: y + $(window).height() }, "slow");      
-
     	} 
     	return false;
     });

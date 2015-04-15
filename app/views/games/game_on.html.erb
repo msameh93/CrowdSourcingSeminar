@@ -18,7 +18,7 @@
 </script>
 
 <body>
-  <div class="zone polling" id="zone" data-game="<%= @game.id%>">
+  <div class="zone polling" id="zone" >
 
     <div class="nav-bar">
       <ul>
@@ -27,7 +27,7 @@
       </ul>
     </div>
 
-    <div id="game-body">
+    <div id="game-body" data-game="<%= @game.id%>">
       <%= render "game_update" %>
     </div>
 
