@@ -6,12 +6,10 @@
   }
 
   function sendHint() {
-    clear();
     $("#zone").append('<%= escape_javascript(render "hint_form") %>');
   }
 
   function guessWord() {
-    clear();
     $("#zone").append('<%= escape_javascript(render "guess_form") %>');
   }
 
