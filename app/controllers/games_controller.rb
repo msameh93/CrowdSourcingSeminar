@@ -99,8 +99,7 @@ class GamesController < ApplicationController
 
 	def leave_game
 		game = Game.find(params[:gid])
-		game.game_ended = true
-		game.save
+		game.delete!
 		redirect_to controller: "games", action: "get_online_friends"
 	end
 
