@@ -2,19 +2,31 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-
-  before_filter :set_last_seen_at, if: proc { session[:current_user_id] != nil }
-
-  	def current_user
-    @_current_user ||= session[:current_user_id] &&
-      User.find_by(id: session[:current_user_id])
-  	end
+	after_filter :user_activity
+  before_filter :requests
 
 	private
-	def set_last_seen_at
-		user = User.find_by(id: session[:current_user_id])
-  		user.update_attribute(:last_seen_at, Time.now)
-  		user.save
-  		session[:last_seen_at] = Time.now
+	def user_activity
+  	current_user.try :touch
 	end
+
+  def after_sign_in_path_for(resource)
+    "/games/get_online_friends"
+  end
+
+  def after_sign_out_path_for(resource)
+    root_url
+  end
+
+  def requests
+    requests = Request.where(receiver_id: current_user.id)
+    @req_online = Array.new
+    requests.each { |r|
+      user  = User.find(r.sender_id)
+      if user.online?
+        @req_online.push(r)
+      end
+    }
+  end
+
 end

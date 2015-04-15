@@ -1,0 +1,51 @@
+<script src="jquery-1.11.2.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+  
+  function clear() {
+     $("#zone").empty();
+  }
+
+  function gameRequest() {
+    clear();
+    $("#zone").append('<%= escape_javascript(render "request_form") %>');
+  }
+
+</script>
+
+<div class="zone" id="zone">
+  <div>
+    <ul>
+      <% @game1 = Game.where(game_ended: false).find_by_player1_id(current_user.id) %>
+      <% @game2 = Game.where(game_ended: false).find_by_player2_id(current_user.id) %>
+      <% if @game1 %>
+        <li><%= link_to("Current Game", {controller: "games", action: "game_on", gid: @game1.id}) %></li>
+      <% elsif @game2 %>
+        <li><%= link_to("Current Game", {controller: "games", action: "game_on", gid: @game2.id}) %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="panel panel-default" id= "online-friends">
+    <div class="panel-body">
+      <h2 id="online">Online Friends</h2>
+      <% if !@friends.blank? %>
+        <% if !@online.blank? %>
+          <div class="row" id="picture-row">
+            <% for f in @online %>
+              <div class="col-xs-6 col-md-3">
+                <a onclick="gameRequest();<%= session[:receiver_id] = f['id'] %>" class="thumbnail">
+                  <img class="media-object" id= "online_image" src="<%= (User.find_by_uid(f['id'])).image %>">
+                  <h3> <%= f["name"] %></h3>
+                </a>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <h2 id="online">You currently have no online friends.</h2>
+        <% end %>
+      <% else %>
+        <h2 id="online">None of your friends play this game, invite them to play?</h2>
+      <% end %>
+    </div>
+  </div>
+</div> 
+          

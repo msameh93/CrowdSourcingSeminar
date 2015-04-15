@@ -15,7 +15,7 @@ li {
   float: left;
 }
 
-li#friend:hover {
+li#link:hover {
   cursor: pointer;
   color: #FFA500;
 }

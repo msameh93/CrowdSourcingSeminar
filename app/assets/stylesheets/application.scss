@@ -1,0 +1,166 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+body { 
+	background-image: url("retina_wood.png");
+}
+
+h3 {
+	text-align: center;
+	font-family: Archer Semibold;
+	opacity: 1;
+}
+
+#game-rule{
+	margin-top: 1cm;
+}
+
+#example{
+	margin-top: 2cm;
+}
+
+#how-panel { 
+	background-image: url("concrete_seamless.png");
+	margin-top:1cm;
+	opacity: 0.7;
+}
+
+#online_image{
+    border-radius: 15px;
+    height: 220px;
+    width: 200px;
+}
+
+#picture-row{
+	margin-top:2cm;	
+}
+
+#enjoy{
+	text-align: center;
+	color: red;
+	font-family: Archer Semibold;
+  	font-weight: 500 !important;
+  	margin-top:2cm;
+  	font-size: 50px;
+}
+
+.alert{
+	margin-top: 0.3cm;
+}
+
+#online-friends{
+	background-image: url("concrete_seamless.png");
+	margin-top:1cm;
+	opacity: 0.9;
+}
+
+.jumbotron #title{
+	color: white;
+	letter-spacing: -2px;
+  	line-height: 1;
+  	text-shadow: 4px 3px 0px green, 9px 8px 0px rgba(0, 0, 0, 0.15);
+  	margin: 0 0 15px;
+}
+
+h4{
+	display: inline-block;
+}
+
+#online{
+	text-align: center;
+	font-family: Archer Semibold;
+  	font-weight: 500 !important;
+}
+
+#request-link{
+	display: inline-block;
+	margin-right: 0;
+	padding-right: 0;
+}
+
+#request-no{
+	margin-right: 15px;
+	background: red;
+}
+
+#user_name{
+	font-weight: bold;
+	color: black;
+}
+
+#user_name:hover{
+	text-decoration:none;
+}
+
+.jumbotron #caption{
+	text-align: center;
+	color: white;
+	font-family: Archer Semibold;
+  	font-weight: 500 !important;
+  	margin: 0 0 15px;
+  	margin-top:2cm;
+  	font-size: 50px;
+  	line-height: 90px;
+  	font-style: normal;
+  	height: 200px;
+}
+
+.jumbotron #caption_how{
+	background-image: linear-gradient(-45deg, black 25%, transparent 25%, transparent 50%, black 75%, transparent 75%);
+    background-size: 4px 4px;
+}
+
+.jumbotron {
+	background: url(pool_table.png);
+	background-attachment: fixed;
+	margin-top: 1cm;
+}
+
+#how_text{
+	display: block;
+	width:200px;
+	height: 50px;
+	font-family: Archer Semibold;
+  	font-size: 20px;
+	margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2cm;
+    background: none;
+    color: white;
+}
+
+#game-hints{
+	
+}
+
+#hints{
+	text-align:center;
+}
+
+#how_text:hover{
+    background: white;
+    color: green;
+}
+
+.jumbotron #fblogin-link {
+	display: block;
+	width:300px;
+	margin-left: auto;
+    margin-right: auto;
+    margin-top: 1cm;
+    margin-bottom: 1cm;
+	color: white;
+}
+
+#fblogin-link:hover { 
+  color: white;
+  text-decoration:none;
+}
+
+.fa-facebook-square {
+	color: white;
+	margin-right: 5px;
+}
+

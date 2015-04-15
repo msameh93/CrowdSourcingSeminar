@@ -45,4 +45,8 @@ end
 
 gem 'coffee-script-source', '1.8.0'
 gem 'tzinfo-data'
+gem 'devise'
 gem 'omniauth-facebook'
+gem 'bootstrap-sass'
+gem 'font-awesome-sass'
+gem 'paperclip'

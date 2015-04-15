@@ -1,0 +1,51 @@
+<div class="panel panel-default" id= "online-friends">
+  <div class="panel-body">
+    <div class="row" id= "game-hints">
+      <div class="span3">
+        <h2 id="online">Hints:</h2>
+        <% for hint in @hints %>
+            <h3><%= hint.hint %></h3><br>
+        <% end %>
+      </div>
+    </div>
+      <% if @game.player1_id == current_user.id %>
+        <h2>Score: <%= @game.p1score %></h2>
+        <h3>Word is: <%= @word.word %></h3>
+        
+        <p>Guess no: <%= @game.guess_no %></p>
+        <% if @guess != @game.guess %>
+          <p>Guess: <%= @game.guess %><% session[:guess] = @game.guess %></p>
+        <% end %>
+        <% if @game.turn == 1 %>
+          <ul>
+            <% if !@game.hints_finished? %>
+              <li><%= link_to("Send Hint", "#", onClick: "sendHint()") %></li>
+              <li><%= link_to("No more hints!", {controller: "games", action: "no_more_hints", gid: @game.id}) %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>not your turn!</p>
+        <% end %>
+      
+      <% elsif @game.player2_id == current_user.id %>
+        <h2>Score: <%= @game.p2score %></h2>
+        <p>Guess no: <%= @game.guess_no %></p>
+        <% if @guess != @game.guess %>
+          <p>Guess: <%= @game.guess %><% session[:guess] = @game.guess %></p>
+        <% end %>
+        <% if @game.turn == 2 %>
+          <ul>
+            <li><%= link_to("Guess word", "#", onClick: "guessWord()") %></li>
+            <% if @game.hints_finished? %>
+            <li>3arosty!</li>
+            <% else %>
+              <li><%= link_to("3arosty!", {controller: "games", action: "get_hint", gid: @game.id}) %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>not your turn!</p>
+        <% end %>
+      
+      <% end %>
+  </div>
+</div>
