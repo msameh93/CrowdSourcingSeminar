@@ -1,4 +1,11 @@
-<div class="panel panel-default" id= "online-friends">
+<% game_turn= false %>
+<%if @game.player1_id == current_user.id && @game.turn == 1 %>
+  <% game_turn= true %>
+<%end%>
+<%if @game.player2_id == current_user.id && @game.turn == 2 %>
+  <% game_turn= true %>
+<%end%>
+<div class="panel panel-default gamepolling" id= "online-friends" data-turn="<%= game_turn %>">
   <div class="panel-body">
     <div class="row" id= "game-hints">
       <div class="span3">

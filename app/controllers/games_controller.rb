@@ -80,6 +80,9 @@ class GamesController < ApplicationController
 
 	def game_on
 		@game = Game.find(params[:gid])
+		if(@game = nil)
+			return redirect_to controller: "games", action: "get_online_friends"
+		end
 		if @game.game_ended?
 			if @game.winner.nil?
 				flash[:danger] = "Seems that other player ended the game."
@@ -223,6 +226,9 @@ class GamesController < ApplicationController
 
 	def update_game
 		@game = Game.find(params[:game])
+		if(@game = nil)
+			return redirect_to controller: "games", action: "get_online_friends"
+		end
 		@word = Word.find_by_game_id(@game.id)
 		@hints = Hint.where(word_id: @word.id)
 		@guess = session[:guess]
