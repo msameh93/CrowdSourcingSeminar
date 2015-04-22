@@ -58,11 +58,13 @@ class GamesController < ApplicationController
 	def start_game
 		request = Request.find(params[:request_id])
 		game1 = Game.where(game_ended: false).find_by_player1_id(request.sender_id)
-		game2 = Game.where(game_ended: false).find_by_player2_id(request.receiver_id)
-		if game1 
+		game2 = Game.where(game_ended: false).find_by_player2_id(request.sender_id)
+		game3 = Game.where(game_ended: false).find_by_player2_id(request.receiver_id)
+		game4 = Game.where(game_ended: false).find_by_player1_id(request.receiver_id)
+		if game1 || game2
 			flash[:danger] = "Other Player is currently busy playing another game. Please try again later."
 			redirect_to controller: "games", action: "view_requests"
-		elsif game2
+		elsif game3 || game4
 			flash[:danger] = "You cannot play more than one game at the same time."
 			redirect_to controller: "games", action: "view_requests"
 		end
@@ -102,7 +104,7 @@ class GamesController < ApplicationController
 
 	def leave_game
 		game = Game.find(params[:gid])
-		game.delete
+		game.game_ended= true
 		game.save
 		redirect_to controller: "games", action: "get_online_friends"
 	end
@@ -229,9 +231,11 @@ class GamesController < ApplicationController
 		if(@game = nil)
 			return redirect_to controller: "games", action: "get_online_friends"
 		end
+		@ended= @game.game_ended
 		@word = Word.find_by_game_id(@game.id)
 		@hints = Hint.where(word_id: @word.id)
 		@guess = session[:guess]
+		@path= "/games/get_online_friends"
 		respond_to do |format|
 			format.js{render 'update_game'}
 			format.json{}
