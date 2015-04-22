@@ -83,6 +83,7 @@ class GamesController < ApplicationController
 
 	def game_on
 		@game = Game.find(params[:gid])
+		puts @game
 		if @game = nil
 			return redirect_to controller: "games", action: "get_online_friends"
 		end
