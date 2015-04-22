@@ -61,15 +61,16 @@ class GamesController < ApplicationController
 		game2 = Game.where(game_ended: false).find_by_player2_id(request.sender_id)
 		game3 = Game.where(game_ended: false).find_by_player2_id(request.receiver_id)
 		game4 = Game.where(game_ended: false).find_by_player1_id(request.receiver_id)
-		if game1 || game2
+		if game1 != nil || game2 != nil
 			flash[:danger] = "Other Player is currently busy playing another game. Please try again later."
 			redirect_to controller: "games", action: "view_requests"
-		elsif game3 || game4
-			flash[:danger] = "You cannot play more than one game at the same time."
+		elsif game3 != nil || game4 != nil
+ 			flash[:danger] = "You cannot play more than one game at the same time."
 			redirect_to controller: "games", action: "view_requests"
 		end
 		new_game = Game.create_new_game(request.sender_id, request.receiver_id, request.word, 
 				request.hint, request.category_id)
+		new_game.save
 		session[:guess] = nil
 		if new_game
 			request.delete
@@ -82,7 +83,7 @@ class GamesController < ApplicationController
 
 	def game_on
 		@game = Game.find(params[:gid])
-		if(@game = nil)
+		if @game = nil
 			return redirect_to controller: "games", action: "get_online_friends"
 		end
 		if @game.game_ended?
