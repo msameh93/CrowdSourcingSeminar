@@ -83,11 +83,11 @@ class GamesController < ApplicationController
 
 	def game_on
 		@game = Game.find(params[:gid])
-		puts @game
+		puts @game.game_ended
 		if @game = nil
 			return redirect_to controller: "games", action: "get_online_friends"
 		end
-		if @game.game_ended?
+		if @game.game_ended
 			if @game.winner.nil?
 				flash[:danger] = "Seems that other player ended the game."
 			else
