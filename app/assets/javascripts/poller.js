@@ -7,7 +7,6 @@ function updateRequests(){
 		$.getScript("/update_game.js?&game=" + $('#game-body').attr('data-game'));
 	}else{
 		$.getScript("/update_request.js")
-		
 	}
 	setTimeout(updateRequests, 2000);
 }

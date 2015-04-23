@@ -56,14 +56,15 @@ class GamesController < ApplicationController
 	end
 
 	def start_game
-		request = Request.find(params[:request_id])
-		game1 = Game.where(game_ended: false).find_by_player1_id(request.sender_id)
-		game2 = Game.where(game_ended: false).find_by_player2_id(request.receiver_id)
-		if game1 
+		game1 = Game.where(:game_ended => false).find_by_player1_id(Request.find_by_id(params[:request_id]).sender_id)
+		game2 = Game.where(:game_ended => false).find_by_player2_id(Request.find_by_id(params[:request_id]).sender_id)
+		game3 = Game.where(:game_ended => false).find_by_player1_id(Request.find_by_id(params[:request_id]).receiver_id)
+		game4 = Game.where(:game_ended => false).find_by_player2_id(Request.find_by_id(params[:request_id]).receiver_id)
+		if game1 != nil || game2 != nil
 			flash[:danger] = "Other Player is currently busy playing another game. Please try again later."
 			redirect_to controller: "games", action: "view_requests"
-		elsif game2
-			flash[:danger] = "You cannot play more than one game at the same time."
+		elsif game3 != nil || game4 != nil
+ 			flash[:danger] = "You cannot play more than one game at the same time."
 			redirect_to controller: "games", action: "view_requests"
 		end
 		new_game = Game.create_new_game(request.sender_id, request.receiver_id, request.word, 
@@ -186,19 +187,10 @@ class GamesController < ApplicationController
 		if(@game != nil)
 			@path= "/games/game_on?gid=" + @game.id.to_s 
 			@curr_player= 1
-		# 	respond_to do |format|
-		# 		format.js{redirect_to controller: "games", action: "game_on", gid: game.id}
-		# 		format.json{}
-		# 	end
 		elsif game1 !=nil
 			@game = game1
 			@path= "/games/game_on?gid=" + @game.id.to_s 
 			@curr_player= 2
-		# 	respond_to do |format|
-		# 		format.js{redirect_to controller: "games", action: "game_on", gid: game1.id}
-		# 		format.json{}
-		# 	end
-		# else
 		end
 		requests = Request.where(receiver_id: current_user.id)
 		@req_online = Array.new
@@ -213,7 +205,6 @@ class GamesController < ApplicationController
 			format.js{render 'update_request'}
 			format.json{}
 		end
-		# end
 	end
 
 	def update_game
