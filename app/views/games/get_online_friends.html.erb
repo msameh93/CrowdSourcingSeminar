@@ -1,29 +1,41 @@
-<script src="jquery-1.11.2.min.js"></script>
-<script type="text/javascript" charset="utf-8">
-  
-  function clear() {
-     $("#zone").empty();
-  }
-
-  function gameRequest() {
-    clear();
-    $("#zone").append('<%= escape_javascript(render "request_form") %>');
-  }
-
-</script>
+<div class="modal fade" id="myModal-game" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h2 id="online"> has started a game with you</h2>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">Play</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Send Request</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_tag("/games/send_request", method: "get") do %>
+          <%= label_tag(:category, "Select Category:") %>
+          <%= select_tag :category, options_from_collection_for_select(@categories, "id", "name") %><br>
+          <%= label_tag(:word, "Enter Word:") %>
+          <%= text_field_tag(:word) %><br>
+          <%= label_tag(:hint, "Enter hint:") %>
+          <%= text_field_tag(:hint) %><br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%= submit_tag "Send Request", class: "btn btn-primary" %>
+          <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="zone" id="zone">
-  <div>
-    <ul>
-      <% @game1 = Game.where(game_ended: false).find_by_player1_id(current_user.id) %>
-      <% @game2 = Game.where(game_ended: false).find_by_player2_id(current_user.id) %>
-      <% if @game1 %>
-        <li><%= link_to("Current Game", {controller: "games", action: "game_on", gid: @game1.id}) %></li>
-      <% elsif @game2 %>
-        <li><%= link_to("Current Game", {controller: "games", action: "game_on", gid: @game2.id}) %></li>
-      <% end %>
-    </ul>
-  </div>
   <div class="panel panel-default" id= "online-friends">
     <div class="panel-body">
       <h2 id="online">Online Friends</h2>
@@ -32,7 +44,7 @@
           <div class="row" id="picture-row">
             <% for f in @online %>
               <div class="col-xs-6 col-md-3">
-                <a onclick="gameRequest();<%= session[:receiver_id] = f['id'] %>" class="thumbnail">
+                <a data-toggle="modal" data-target="#myModal" onclick="<%= session[:receiver_id] = f['id'] %>" class="thumbnail">
                   <img class="media-object" id= "online_image" src="<%= (User.find_by_uid(f['id'])).image %>">
                   <h3> <%= f["name"] %></h3>
                 </a>
@@ -48,4 +60,3 @@
     </div>
   </div>
 </div> 
-          

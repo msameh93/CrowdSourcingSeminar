@@ -33,7 +33,7 @@ class GamesController < ApplicationController
 
 	def send_request
 		receiver = User.find_by_uid(session[:receiver_id])
-		Request.create_request(current_user.id, receiver.id, params[:word], params[:hint], params[:category_id].to_i)
+		Request.create_request(current_user.id, receiver.id, params[:word], params[:hint], params[:category].to_i)
 		flash[:success] = "Request sent successfully."
 		redirect_to controller: "games", action: "get_online_friends"
 	end
@@ -68,7 +68,6 @@ class GamesController < ApplicationController
 		end
 		new_game = Game.create_new_game(request.sender_id, request.receiver_id, request.word, 
 				request.hint, request.category_id)
-		session[:guess] = nil
 		if new_game
 			request.delete
 			redirect_to controller: "games", action: "game_on", gid: new_game.id
@@ -80,26 +79,18 @@ class GamesController < ApplicationController
 
 	def game_on
 		@game = Game.find(params[:gid])
-		if @game.game_ended?
-			if @game.winner.nil?
-				flash[:danger] = "Seems that other player ended the game."
-			else
-				flash[:danger] = "You lose."
-			end
-			redirect_to controller: "games", action: "get_online_friends"
-		end
 		if @game.hints_finished?
 			@game.turn = 2
 			@game.save
 		end
 		@word = Word.find_by_game_id(@game.id)
 		@hints = Hint.where(word_id: @word.id)
-		@guess = session[:guess]
 	end
 
 	def leave_game
 		game = Game.find(params[:gid])
-		game.delete
+		game.game_ended= true
+		game.winner= 0
 		game.save
 		redirect_to controller: "games", action: "get_online_friends"
 	end
@@ -148,10 +139,11 @@ class GamesController < ApplicationController
 	def guess_word
 		game = Game.find(params[:gid])
 		word = Word.find_by_game_id(params[:gid])
+		Collect.create_collect(params[:guess], word.category_id)
 		game.guess = params[:guess]
 		game.guess_no = game.guess_no + 1
 		game.save
-		if word.word == params[:guess]
+		if word.word.downcase == params[:guess].downcase
 			game.game_ended = true
 			game.p1score = 0
 			game.winner = 2
@@ -182,16 +174,18 @@ class GamesController < ApplicationController
 			else
 				game.p2score = game.p2score - 5
 				game.save
+				flash[:danger] = "Wrong Guess."
 			end
 		end
 		redirect_to controller: "games", action: "game_on", gid: game.id
 	end
 
 	def update_request
-		@game= Game.find_by_player1_id(current_user.id)
-		game1= Game.find_by_player2_id(current_user.id)
+		@game= Game.where(game_ended: false).find_by_player1_id(current_user.id)
+		game1= Game.where(game_ended: false).find_by_player2_id(current_user.id)
 		if(@game != nil)
 			@path= "/games/game_on?gid=" + @game.id.to_s 
+			@curr_player= 1
 		# 	respond_to do |format|
 		# 		format.js{redirect_to controller: "games", action: "game_on", gid: game.id}
 		# 		format.json{}
@@ -199,6 +193,7 @@ class GamesController < ApplicationController
 		elsif game1 !=nil
 			@game = game1
 			@path= "/games/game_on?gid=" + @game.id.to_s 
+			@curr_player= 2
 		# 	respond_to do |format|
 		# 		format.js{redirect_to controller: "games", action: "game_on", gid: game1.id}
 		# 		format.json{}
@@ -223,9 +218,14 @@ class GamesController < ApplicationController
 
 	def update_game
 		@game = Game.find(params[:game])
+		if @game.player1_id == current_user.id
+			@curr_player = 1
+		else
+			@curr_player = 2
+		end
 		@word = Word.find_by_game_id(@game.id)
 		@hints = Hint.where(word_id: @word.id)
-		@guess = session[:guess]
+		@path= "/games/get_online_friends"
 		respond_to do |format|
 			format.js{render 'update_game'}
 			format.json{}

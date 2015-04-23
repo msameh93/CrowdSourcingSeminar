@@ -9,6 +9,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_and_redirect @user, :event => :authentication
       @user = User.find(current_user.id)
       @user.image = "http://graph.facebook.com/#{@user.uid}/picture?type=large"
+      @user.name = auth["info"]["name"]
       @user.save
       set_flash_message(:success, :success, :kind => "Facebook") if is_navigational_format?
     else

@@ -1,16 +1,5 @@
-<body>
-  <div class="zone polling" id="zone" >
-
-    <div class="nav-bar">
-      <ul>
-        <li><%= link_to("Back to home page", "/games/home") %></li>
-        <li><%= link_to("Leave Game", {controller: "games", action: "leave_game", gid: params[:gid]}) %></li>
-      </ul>
-    </div>
-
-    <div id="game-body" data-game="<%= @game.id%>">
-      <%= render "game_update" %>
-    </div>
-
+<div class="zone polling" id="zone" >
+  <div id="game-body" data-game="<%= @game.id%>">
+    <%= render "game_update" %>
   </div>
-</body>
+</div>

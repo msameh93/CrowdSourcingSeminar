@@ -1,4 +1,17 @@
-<% if @game != nil%>
-	window.location.href= '<%= @path %>';
+<% if @game != nil && !@game.game_ended%>
+	<% if @game.just_started %>
+		<% @game.just_started = false %>
+		<% @game.save%>
+		<% if @curr_player == 1 %>
+			$('#myModal-game .modal-body #online').text("<%= User.find(@game.player2_id).name %> has started a game with you");
+		<% else %>
+			$('#myModal-game .modal-body #online').text("<%= User.find(@game.player1_id).name %> has started a game with you");
+		<% end %>
+		$('#myModal-game').modal('show');
+	<% else %>
+		if(!($('#myModal-game').hasClass('in'))){
+			window.location.href= '<%= @path %>';
+		}
+	<% end %>
 <% end%>
 $('#request-no').html('<%= @count%>');

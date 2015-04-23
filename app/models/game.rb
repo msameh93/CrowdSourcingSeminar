@@ -5,10 +5,12 @@ class Game < ActiveRecord::Base
 		game = Game.new(
 			player1_id: p1,
 			player2_id: p2,
+			winner: 0,
 			turn: 2,
 			guess_no: 0,
 			hints_finished: false,
 			game_ended: false,
+			just_started: true,
 			p1score: 15,
 			p2score: 15)
 		game.save

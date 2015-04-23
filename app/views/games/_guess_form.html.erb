@@ -1,6 +1,6 @@
 <%= form_tag("/games/guess_word", method: "get") do %>
-<%= label_tag(:guess, "Enter Guess:") %>
-<%= text_field_tag(:guess) %><br>
-<%= hidden_field_tag(:gid, @game.id) %><br>
-<%= submit_tag("Send Guess") %>
+	<%= label_tag(:guess, "Enter Guess:") %>
+	<%= text_field_tag :guess, params[:barcode], id: 'guess_text' %><br>
+	<%= hidden_field_tag(:gid, @game.id) %><br>
+	<%= submit_tag "Send", class: "btn btn-success", id:"send-hint" %>
 <% end %>
