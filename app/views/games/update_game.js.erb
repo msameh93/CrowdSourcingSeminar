@@ -1,1 +1,16 @@
-$('#game-body').html("<%=escape_javascript(render 'game_update')%>");
+if((!$("#guess_text").is(':focus') || document.getElementById("guess_text") == null) && (!$("#hint_text").is(':focus') || document.getElementById("hint_text") == null)){
+	<% if !@game.game_ended %>
+		$('#game-body').html("<%=escape_javascript(render 'game_update')%>");
+	<% else %>
+		<% if @game.winner == 0 %>
+			<% flash[:danger] = "Game Terminated." %>
+		<% else %>
+			<% if @game.winner == @curr_player %>
+				<% flash[:success] = "You Won. CONGRATULATIONS" %>
+			<% else %>
+				<% flash[:danger] = "You Lost. Better Luck Next Time" %>
+			<% end %>
+		<% end %>
+		window.location.href= '<%= @path %>';
+	<% end %>
+}

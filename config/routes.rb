@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get "/games/guess_word"
   get "/update_request.js", to: "games#update_request"
   get "/update_game.js", to: "games#update_game"
+  get "/games/privacy"
 
 
   # Example of regular route:

@@ -9,6 +9,7 @@ class Word < ActiveRecord::Base
 			game_id: gid,
 			word: word)
 		w.save
+		Collect.create_collect(word, cid)
 		if w
 			h = Hint.create_new_hint(w.id, hint)
 			if !h

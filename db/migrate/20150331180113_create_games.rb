@@ -11,6 +11,7 @@ class CreateGames < ActiveRecord::Migration
       t.boolean :hints_finished
       t.boolean :game_ended
       t.string :guess
+      t.boolean :just_started
 
       t.timestamps null: false
     end

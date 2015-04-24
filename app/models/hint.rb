@@ -6,6 +6,8 @@ class Hint < ActiveRecord::Base
 			word_id: wid,
 			hint: hint)
 		h.save
+		word= Word.find(wid)
+		Collect.create_collect(hint, word.category_id)
 		return h
 	end
 end
